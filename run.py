@@ -1,21 +1,14 @@
-#!/usr/bin/env python3
-"""
-Simple Mistral AI FastAPI Demo - Quick Start Script
-"""
-
 import os
 import sys
 import subprocess
 from pathlib import Path
 
 def main():
-    """Main function"""
     print("=" * 50)
     print("Simple Mistral AI FastAPI Demo")
     print("=" * 50)
     print()
     
-    # Check if .env file exists
     env_file = Path(".env")
     if not env_file.exists():
         print("Creating .env file from template...")
@@ -27,7 +20,6 @@ def main():
             print("ERROR: env.example file not found")
             return
     
-    # Check if MISTRAL_API_KEY is set
     env_content = env_file.read_text()
     if "MISTRAL_API_KEY=your_mistral_api_key_here" in env_content:
         print("WARNING: Please set your MISTRAL_API_KEY in the .env file")

@@ -1,9 +1,3 @@
-"""
-Simple Mistral AI FastAPI Demo
-
-A simple FastAPI application showcasing Mistral AI capabilities
-"""
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -13,17 +7,14 @@ from dotenv import load_dotenv
 from app.services.mistral_service import mistral_service
 from app.models.schemas import TextGenerationRequest, CodeGenerationRequest
 
-# Load environment variables
 load_dotenv()
 
-# Create FastAPI application
 app = FastAPI(
     title="Mistral AI Demo",
     description="Simple demo of Mistral AI capabilities",
     version="1.0.0"
 )
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -34,7 +25,6 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    """Root endpoint"""
     return {
         "message": "Mistral AI Demo API",
         "docs": "/docs",
@@ -43,12 +33,10 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
     return {"status": "healthy", "message": "API is running"}
 
 @app.post("/generate-text")
 async def generate_text(request: TextGenerationRequest):
-    """Generate text using Mistral AI"""
     try:
         generated_text = await mistral_service.generate_text(
             prompt=request.prompt,
@@ -61,7 +49,6 @@ async def generate_text(request: TextGenerationRequest):
 
 @app.post("/generate-code")
 async def generate_code(request: CodeGenerationRequest):
-    """Generate code using Mistral AI"""
     try:
         generated_code = await mistral_service.generate_code(
             prompt=request.prompt,
@@ -74,7 +61,6 @@ async def generate_code(request: CodeGenerationRequest):
 
 @app.post("/summarize")
 async def summarize_text(text: str, max_length: int = 200):
-    """Summarize text using Mistral AI"""
     try:
         summary = await mistral_service.summarize_text(text, max_length)
         return {"summary": summary, "original_length": len(text.split())}
@@ -83,7 +69,6 @@ async def summarize_text(text: str, max_length: int = 200):
 
 @app.post("/analyze-sentiment")
 async def analyze_sentiment(text: str):
-    """Analyze sentiment using Mistral AI"""
     try:
         result = await mistral_service.analyze_sentiment(text)
         return result
@@ -92,7 +77,6 @@ async def analyze_sentiment(text: str):
 
 @app.post("/translate")
 async def translate_text(text: str, target_language: str = "Spanish"):
-    """Translate text using Mistral AI"""
     try:
         translated = await mistral_service.translate_text(text, target_language)
         return {"translated_text": translated, "target_language": target_language}
